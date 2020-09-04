@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.tmdbapp.*
 import com.example.tmdbapp.data.networking.models.response.MovieResults
 import com.example.tmdbapp.databinding.FragmentMovieBinding
+import com.example.tmdbapp.ui.features.moviedetails.MovieDetailFragment
+import com.google.android.material.transition.MaterialContainerTransform
 import kotlinx.android.synthetic.main.fragment_movie.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,7 +40,7 @@ class MovieFragment : Fragment() {
             inflater,
             R.layout.fragment_movie, container, false
         )
-        return inflater.inflate(R.layout.fragment_movie, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,8 +71,8 @@ class MovieFragment : Fragment() {
 
     fun setAdapter(listOfMovies: List<MovieResults.Result?>?) {
         val adapter = MoviesAdapter(listOfMovies)
-        movie_recycler_view.layoutManager = GridLayoutManager(context, 2)
-        movie_recycler_view.adapter = adapter
+        binding.movieRecyclerView.layoutManager = GridLayoutManager(context, 2)
+        binding.movieRecyclerView.adapter = adapter
     }
 
 
