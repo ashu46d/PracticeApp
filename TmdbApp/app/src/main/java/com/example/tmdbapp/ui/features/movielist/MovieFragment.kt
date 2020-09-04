@@ -69,7 +69,7 @@ class MovieFragment : Fragment() {
 
     fun setAdapter(listOfMovies: List<MovieResults.Result?>?) {
         val adapter = MoviesAdapter(listOfMovies)
-        movie_recycler_view.layoutManager = GridLayoutManager(context, 3)
+        movie_recycler_view.layoutManager = GridLayoutManager(context, 2)
         movie_recycler_view.adapter = adapter
     }
 
