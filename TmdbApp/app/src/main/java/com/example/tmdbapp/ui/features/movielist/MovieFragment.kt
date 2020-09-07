@@ -2,6 +2,7 @@ package com.example.tmdbapp.ui.features.movielist
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,15 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.tmdbapp.*
-import com.example.tmdbapp.data.networking.models.response.MovieResults
+import com.example.tmdbapp.data.networking.models.MovieDomainModel
 import com.example.tmdbapp.databinding.FragmentMovieBinding
-import com.example.tmdbapp.ui.features.moviedetails.MovieDetailFragment
-import com.google.android.material.transition.MaterialContainerTransform
-import kotlinx.android.synthetic.main.fragment_movie.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
 
 class MovieFragment : Fragment() {
 
@@ -30,7 +24,7 @@ class MovieFragment : Fragment() {
         )
     }
 
-    lateinit var binding: FragmentMovieBinding
+    private lateinit var binding: FragmentMovieBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,32 +40,18 @@ class MovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        mViewModel.getPopularMovies()
         mViewModel.getMovies().observe(viewLifecycleOwner, Observer {
-            it.enqueue(object : Callback<MovieResults> {
-                override fun onFailure(call: Call<MovieResults>, t: Throwable) {
-                    t.printStackTrace()
-                }
-
-                override fun onResponse(
-                    call: Call<MovieResults>,
-                    response: Response<MovieResults>
-                ) {
-                    val results = response.body()
-                    val listOfMovies = results!!.getResults()
-
-                    setAdapter(listOfMovies)
-                }
-
-            })
-
+            it?.let{
+                setAdapter(it)
+            }
         })
-
     }
 
-    fun setAdapter(listOfMovies: List<MovieResults.Result?>?) {
+    fun setAdapter(listOfMovies: List<MovieDomainModel>) {
+        Log.d("TAG111", "setAdapter: ${listOfMovies}")
         val adapter = MoviesAdapter(listOfMovies)
-        binding.movieRecyclerView.layoutManager = GridLayoutManager(context, 2)
+        binding.movieRecyclerView.layoutManager = GridLayoutManager(context, 3)
         binding.movieRecyclerView.adapter = adapter
     }
 

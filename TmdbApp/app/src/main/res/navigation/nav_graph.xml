@@ -9,8 +9,8 @@
         android:id="@+id/movieFragment"
         android:name="com.example.tmdbapp.ui.features.movielist.MovieFragment"
         android:label="fragment_start"
-        tools:layout="@layout/fragment_movie" >
-          <action
+        tools:layout="@layout/fragment_movie">
+        <action
             android:id="@+id/action_movieFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
     </fragment>
@@ -18,11 +18,13 @@
         android:id="@+id/movieDetailFragment"
         android:name="com.example.tmdbapp.ui.features.moviedetails.MovieDetailFragment"
         android:label="fragment_game"
-        tools:layout="@layout/fragment_movie_detail" >
+        tools:layout="@layout/fragment_movie_detail">
         <argument
-            android:name="@+id/myArg"
-            app:argType="com.example.tmdbapp.data.networking.models.response.MovieResults$Result"/>
-
+            android:name="@+id/movieId"
+            app:argType="integer" />
+        <argument
+            android:name="@+id/movie"
+            app:argType="com.example.tmdbapp.data.networking.models.MovieDomainModel" />
     </fragment>
 
 </navigation>

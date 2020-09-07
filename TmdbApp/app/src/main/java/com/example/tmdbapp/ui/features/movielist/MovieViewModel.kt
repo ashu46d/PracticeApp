@@ -1,27 +1,61 @@
 package com.example.tmdbapp.ui.features.movielist
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tmdbapp.data.networking.models.response.MovieResults
+import com.example.tmdbapp.data.GetPopularMoviesUseCase
+import com.example.tmdbapp.data.networking.models.MovieDomainModel
 import com.example.tmdbapp.data.repository.Repository
 import com.example.tmdbapp.ui.features.base.BaseViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import retrofit2.Call
+import com.example.tmdbapp.data.networking.Result
+import com.example.tmdbapp.data.repository.RepositoryImpl
 
-class MovieViewModel(private var repository: Repository): BaseViewModel() {
+class MovieViewModel(private val getPopularMoviesUseCase: GetPopularMoviesUseCase): ViewModel() {
 
-    private val movieResponse = MutableLiveData<Call<MovieResults>>()
 
-    fun getMovies(): MutableLiveData<Call<MovieResults>> {
-                viewModelScope.launch {
-            try {
-                movieResponse.value =  repository.getMovieList()
-            }
-            catch (e:Exception){
-                e.printStackTrace()
+    private lateinit var popularMoviesLiveData: MutableLiveData<List<MovieDomainModel>>
+
+
+    fun getMovies(): LiveData<List<MovieDomainModel>> {
+        if(!::popularMoviesLiveData.isInitialized) {
+            popularMoviesLiveData = MutableLiveData()
+            popularMoviesLiveData.value = null
+        }
+
+        return popularMoviesLiveData
+    }
+
+    fun getPopularMovies() {
+        viewModelScope.launch {
+
+            getPopularMoviesUseCase.execute().also {
+                    result ->
+                when(result) {
+                    is Result.Success -> {
+                        val movies: List<MovieDomainModel>?  = result.data as List<MovieDomainModel>?
+//                        if(movies.isNullOrEmpty()) {
+//                            isLoadingLiveData.value = false
+//                            isErrorLiveData.value = true
+//                        } else {
+//                            isLoadingLiveData.value = false
+                            popularMoviesLiveData.value = movies
+//                        }
+                    }
+
+//                    is Result.Error -> {
+//                        isLoadingLiveData.value = false
+//                        isErrorLiveData.value = true
+//                    }
+                }
+
+
             }
         }
-        return movieResponse
     }
+
+
 }

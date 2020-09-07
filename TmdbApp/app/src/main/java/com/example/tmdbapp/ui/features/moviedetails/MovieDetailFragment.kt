@@ -7,18 +7,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.tmdbapp.BuildConfig
+import com.example.tmdbapp.MyViewModelFactory
 import com.example.tmdbapp.R
+import com.example.tmdbapp.data.networking.models.MovieDomainModel
 import com.example.tmdbapp.databinding.FragmentMovieDetailBinding
+import com.example.tmdbapp.ui.features.movielist.MovieViewModel
+import com.example.tmdbapp.ui.features.movielist.MoviesAdapter
 import com.google.android.material.transition.MaterialContainerTransform
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 
 
 class MovieDetailFragment : Fragment() {
+    private val mViewModel by lazy {
+        ViewModelProvider(this, MyViewModelFactory()).get(
+            MovieDetailViewModel::class.java
+        )
+    }
     val args: MovieDetailFragmentArgs by navArgs()
     lateinit var binding: FragmentMovieDetailBinding
 
@@ -39,9 +51,23 @@ class MovieDetailFragment : Fragment() {
             container,
             false
         ) as FragmentMovieDetailBinding
-        Log.d("TAG111", "onCreateView: ${args.idMyArg.getTitle()}")
-        binding.movieDetail = args.idMyArg
 
+        mViewModel.getData(args.idMovieId).observe(viewLifecycleOwner, Observer {
+            binding.movieDetail = it
+        })
+
+        mViewModel.getRecommendation(args.idMovieId).observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Log.d("RECOMM", "onCreateView: ${it}")
+                binding.recommendationsRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+               binding.recommendationsRecyclerView.adapter = MoviesAdapter(it)
+            }
+        })
+
+        mViewModel.getMovieDetail(args.idMovieId)
+
+        binding.movie = args.idMovie
+//        binding.recommendationsRecyclerView.adapter = MoviesAdapter(rec!!)
         return binding.root
 
     }
@@ -49,8 +75,8 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Glide.with(requireContext())
-            .load("${BuildConfig.IMAGE_URL}${args.idMyArg.getBackdropPath()}").into(expandedImage)
-
+            .load("${args.idMovie.backdrop_path}").into(binding.expandedImage)
+        Glide.with(requireContext()).load("${args.idMovie.poster_path}").into(binding.posterImage)
     }
 
 

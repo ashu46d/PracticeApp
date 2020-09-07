@@ -10,47 +10,44 @@
 
         <variable
             name="item"
-            type="com.example.tmdbapp.data.networking.models.response.MovieResults.Result" />
+            type="com.example.tmdbapp.data.networking.models.MovieDomainModel" />
     </data>
 
 
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:clickable="true"
-            android:focusable="true">
-
-
-            <ImageView
-                android:id="@+id/movie_iamge"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_launcher_background"
+                android:layout_height="180dp"
+                android:clickable="true"
+                android:focusable="true">
 
-                />
 
-            <TextView
-                android:id="@+id/movie_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/black_50"
-                android:gravity="center"
-                android:text="@{item.title}"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/movie_iamge"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_launcher_background" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <TextView
+                    android:id="@+id/movie_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black_50"
+                    android:gravity="center"
+                    android:text="@{item.title}"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 
 

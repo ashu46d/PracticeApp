@@ -2,7 +2,13 @@ package com.example.tmdbapp.data.repository
 
 import com.example.tmdbapp.BuildConfig
 import com.example.tmdbapp.data.networking.ApplicationApi
+import com.example.tmdbapp.data.networking.models.ActorDomainModel
+import com.example.tmdbapp.data.networking.models.MovieDomainModel
+import com.example.tmdbapp.data.networking.models.response.MovieDetailDomainModel
 import com.example.tmdbapp.data.networking.models.response.MovieResults
+import com.example.tmdbapp.data.networking.models.response.RecommendedMovieResponse
+import com.example.tmdbapp.data.networking.models.response.toDomainModel
+import com.example.tmdbapp.data.networking.models.toDomainModel
 import retrofit2.Call
 
 const val PAGE = 1
@@ -10,15 +16,26 @@ const val PAGE = 1
 const val LANGUAGE = "en-US"
 const val CATEGORY = "popular"
 
-class RepositoryImpl(private val api: ApplicationApi):Repository {
+class RepositoryImpl(private val movieApi: ApplicationApi):Repository {
 
-    override suspend fun getMovieList(): Call<MovieResults> {
-
-        return api.listOfMovies(
-            CATEGORY,
-            BuildConfig.API_KEY,
-            LANGUAGE,
-            PAGE
-        )
+    override suspend fun getMovieCredits(movieId: Int): List<ActorDomainModel>? {
+        TODO("Not yet implemented")
     }
+
+    override suspend fun getMovieDetail(movieId: Int): MovieDetailDomainModel {
+        return movieApi.getMovieDetail(movieId,BuildConfig.API_KEY, LANGUAGE).toDomainModel()
+    }
+
+    override suspend fun getRecommendedMovies(movieId: Int): List<MovieDomainModel>? =
+        movieApi.getRecommendedMovies(movieId, BuildConfig.API_KEY , "en-US", 1)
+            .results
+            ?.map { it.toDomainModel()}
+
+    override suspend fun getPopularMovies(page: Int) =
+        movieApi.getPopularMovies(BuildConfig.API_KEY , "en-US", page)
+            .results
+            ?.map {
+                it.toDomainModel()
+            }
+
 }
