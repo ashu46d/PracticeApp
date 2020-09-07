@@ -18,8 +18,10 @@ const val CATEGORY = "popular"
 
 class RepositoryImpl(private val movieApi: ApplicationApi):Repository {
 
-    override suspend fun getMovieCredits(movieId: Int): List<ActorDomainModel>? {
-        TODO("Not yet implemented")
+    override suspend fun getCast(movieId: Int): List<ActorDomainModel>? {
+        return movieApi.getCast(movieId,BuildConfig.API_KEY).cast.map {
+            it.toDomainModel()
+        }
     }
 
     override suspend fun getMovieDetail(movieId: Int): MovieDetailDomainModel {

@@ -30,4 +30,11 @@ interface ApplicationApi {
         @Query("page") page: Int
     ) : RecommendedMovieResponse
 
+    @GET("/3/movie/{movieId}/credits")
+    suspend fun getCast(
+        @Path("movieId") movieId: Int,
+        @Query("api_key") apiKey: String
+    ) : MovieCreditResponse
+
+
 }

@@ -21,6 +21,7 @@ import com.example.tmdbapp.data.networking.models.MovieDomainModel
 import com.example.tmdbapp.databinding.FragmentMovieDetailBinding
 import com.example.tmdbapp.ui.features.movielist.MovieViewModel
 import com.example.tmdbapp.ui.features.movielist.MoviesAdapter
+import com.example.tmdbapp.ui.features.recommendation.RecommnedationAdapter
 import com.google.android.material.transition.MaterialContainerTransform
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 
@@ -59,15 +60,20 @@ class MovieDetailFragment : Fragment() {
         mViewModel.getRecommendation(args.idMovieId).observe(viewLifecycleOwner, Observer {
             it?.let {
                 Log.d("RECOMM", "onCreateView: ${it}")
-                binding.recommendationsRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-               binding.recommendationsRecyclerView.adapter = MoviesAdapter(it)
+                binding.recommendationsRecyclerView.layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                binding.recommendationsRecyclerView.adapter = RecommnedationAdapter(it)
+            }
+        })
+        mViewModel.getCast(args.idMovieId).observe(viewLifecycleOwner, Observer {
+            it?.let{
+                Log.d("ACTORS", "onCreateView: ${it}")
             }
         })
 
         mViewModel.getMovieDetail(args.idMovieId)
 
         binding.movie = args.idMovie
-//        binding.recommendationsRecyclerView.adapter = MoviesAdapter(rec!!)
         return binding.root
 
     }
