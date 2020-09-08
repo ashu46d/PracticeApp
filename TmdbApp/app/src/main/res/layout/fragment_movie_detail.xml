@@ -44,7 +44,7 @@
                 android:id="@+id/movie_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/margin_10"
                 android:layout_marginBottom="30dp"
                 android:text="@{movieDetail.originalTitle}"
                 android:textColor="@android:color/white"
@@ -64,15 +64,15 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_10"
                 app:layout_constraintTop_toBottomOf="@id/guideline">
 
                 <TextView
                     android:id="@+id/rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/margin_10"
                     android:text="@{movie.vote_average + `/10`}"
                     android:textColor="@android:color/white"
                     android:textSize="35sp"
@@ -105,7 +105,7 @@
                     android:id="@+id/language"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/margin_10"
                     android:text="@{`Language : `+ movieDetail.language}"
                     android:textColor="@android:color/white"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +116,7 @@
                     android:id="@+id/type"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/margin_10"
                     android:text="@{`Type : `+ movieDetail.type}"
                     android:textColor="@android:color/white"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -127,7 +127,7 @@
                     android:id="@+id/production"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/margin_10"
                     android:text="@{`Production : `+ movieDetail.productionCountries}"
                     android:textColor="@android:color/white"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -138,7 +138,7 @@
                     android:id="@+id/releaseDate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/margin_10"
                     android:text="@{`Release Date : ` + movie.release_date}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/production"
@@ -157,7 +157,7 @@
                     android:id="@+id/voteAvg"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/margin_10"
                     android:text="@{`Vote Average : `+movie.vote_average}"
                     android:textColor="@android:color/white"
                     app:layout_constraintStart_toStartOf="@id/releaseDate"
@@ -168,8 +168,8 @@
                     android:id="@+id/storyline_head"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Storyline"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:text="@string/storyline"
                     android:textColor="@android:color/white"
                     android:textSize="30sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -179,7 +179,7 @@
                     android:id="@+id/stroyline"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/margin_10"
                     android:text="@{movieDetail.overview}"
                     android:textColor="@android:color/white"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -191,8 +191,8 @@
                     android:id="@+id/cast_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Cast"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:text="@string/cast"
                     android:textColor="@android:color/white"
                     android:textSize="30sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -205,10 +205,12 @@
                     app:layout_constraintTop_toBottomOf="@+id/cast_title" />
 
                 <TextView
+
                     android:id="@+id/recom_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Recommendations"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:text="@string/recommendations"
                     android:textColor="@android:color/white"
                     android:textSize="30sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -227,7 +229,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="260dp" />
+                app:layout_constraintGuide_begin="@dimen/guide" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
