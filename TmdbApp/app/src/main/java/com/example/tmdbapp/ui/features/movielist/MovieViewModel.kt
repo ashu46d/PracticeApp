@@ -5,14 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tmdbapp.data.GetPopularMoviesUseCase
-import com.example.tmdbapp.data.networking.models.MovieDomainModel
-import com.example.tmdbapp.data.repository.Repository
-import com.example.tmdbapp.ui.features.base.BaseViewModel
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import retrofit2.Call
 import com.example.tmdbapp.data.networking.Result
-import com.example.tmdbapp.data.repository.RepositoryImpl
+import com.example.tmdbapp.data.networking.models.MovieDomainModel
+import kotlinx.coroutines.launch
 
 class MovieViewModel(private val getPopularMoviesUseCase: GetPopularMoviesUseCase): ViewModel() {
 

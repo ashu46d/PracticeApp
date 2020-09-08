@@ -1,12 +1,9 @@
 package com.example.tmdbapp.ui.features.moviedetails
 
-import com.example.tmdbapp.data.networking.Result
-import com.example.tmdbapp.data.networking.models.Actor
 import com.example.tmdbapp.data.networking.models.ActorDomainModel
 import com.example.tmdbapp.data.networking.models.MovieDomainModel
 import com.example.tmdbapp.data.networking.models.response.MovieDetailDomainModel
 import com.example.tmdbapp.data.repository.Repository
-import java.io.IOException
 
 class GetMovieDetailUseCase(
     private val movieRepository: Repository

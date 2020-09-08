@@ -8,11 +8,10 @@ import com.example.tmdbapp.data.networking.Result
 class GetPopularMoviesUseCase (
     private val movieRepository: Repository) {
 
-    private var page: Int = 0
+    private var page: Int =1
 
     suspend fun execute(): Result<Any> {
         return try {
-            page++
             movieRepository.getPopularMovies(page)?.let {
                 Result.Success(it.filter { it.poster_path != null })
             } ?: Result.Error("No Data")

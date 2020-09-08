@@ -25,6 +25,9 @@
         <argument
             android:name="@+id/movie"
             app:argType="com.example.tmdbapp.data.networking.models.MovieDomainModel" />
+        <action
+            android:id="@+id/action_movieDetailFragment_self"
+            app:destination="@id/movieDetailFragment" />
     </fragment>
 
 </navigation>

@@ -49,7 +49,6 @@ class MovieFragment : Fragment() {
     }
 
     fun setAdapter(listOfMovies: List<MovieDomainModel>) {
-        Log.d("TAG111", "setAdapter: ${listOfMovies}")
         val adapter = MoviesAdapter(listOfMovies)
         binding.movieRecyclerView.layoutManager = GridLayoutManager(context, 3)
         binding.movieRecyclerView.adapter = adapter
