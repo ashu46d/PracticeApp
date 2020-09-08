@@ -19,6 +19,7 @@ import com.example.tmdbapp.MyViewModelFactory
 import com.example.tmdbapp.R
 import com.example.tmdbapp.data.networking.models.MovieDomainModel
 import com.example.tmdbapp.databinding.FragmentMovieDetailBinding
+import com.example.tmdbapp.ui.features.cast.CastAdapter
 import com.example.tmdbapp.ui.features.movielist.MovieViewModel
 import com.example.tmdbapp.ui.features.movielist.MoviesAdapter
 import com.example.tmdbapp.ui.features.recommendation.RecommnedationAdapter
@@ -67,7 +68,8 @@ class MovieDetailFragment : Fragment() {
         })
         mViewModel.getCast(args.idMovieId).observe(viewLifecycleOwner, Observer {
             it?.let{
-                Log.d("ACTORS", "onCreateView: ${it}")
+                binding.castRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+                binding.castRecyclerView.adapter = CastAdapter(it)
             }
         })
 

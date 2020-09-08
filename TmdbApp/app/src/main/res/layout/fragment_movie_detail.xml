@@ -156,10 +156,31 @@
 
 
         <TextView
+            android:id="@+id/cast_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="40sp"
+            android:layout_marginTop="10dp"
+            android:text="Cast"
             app:layout_constraintStart_toStartOf="@id/poster_image"
+            android:textColor="@android:color/white"
             app:layout_constraintTop_toBottomOf="@id/poster_image"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cast_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/cast_title"
+            />
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/cast_recycler_view"
+            app:layout_constraintTop_toBottomOf="@id/cast_recycler_view"
             android:text="Storyline"
             android:id="@+id/storylineHead"
             android:textColor="@android:color/white"
