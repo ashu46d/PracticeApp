@@ -13,6 +13,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tmdbapp.BuildConfig
 import com.example.tmdbapp.MyViewModelFactory
@@ -23,7 +24,9 @@ import com.example.tmdbapp.ui.features.cast.CastAdapter
 import com.example.tmdbapp.ui.features.movielist.MovieViewModel
 import com.example.tmdbapp.ui.features.movielist.MoviesAdapter
 import com.example.tmdbapp.ui.features.recommendation.RecommnedationAdapter
+import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialElevationScale
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 
 
@@ -53,7 +56,8 @@ class MovieDetailFragment : Fragment() {
             container,
             false
         ) as FragmentMovieDetailBinding
-
+        exitTransition = MaterialElevationScale( false)
+        reenterTransition = MaterialElevationScale(true)
         mViewModel.getData(args.idMovieId).observe(viewLifecycleOwner, Observer {
             binding.movieDetail = it
         })
@@ -63,7 +67,8 @@ class MovieDetailFragment : Fragment() {
                 Log.d("RECOMM", "onCreateView: ${it}")
                 binding.recommendationsRecyclerView.layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                binding.recommendationsRecyclerView.adapter = RecommnedationAdapter(it)
+                val adapter = RecommnedationAdapter(it)
+                binding.recommendationsRecyclerView.adapter = adapter
                 if(it.isEmpty()){
                     binding.recomTitle.visibility = View.GONE
                 }
@@ -73,6 +78,7 @@ class MovieDetailFragment : Fragment() {
             it?.let{
                 binding.castRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
                 binding.castRecyclerView.adapter = CastAdapter(it)
+                binding.castRecyclerView.adapter!!.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
             }
         })
 

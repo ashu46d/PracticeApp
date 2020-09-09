@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tmdbapp.*
 import com.example.tmdbapp.data.networking.models.MovieDomainModel
 import com.example.tmdbapp.databinding.FragmentMovieBinding
+import com.google.android.material.transition.Hold
+import com.google.android.material.transition.MaterialElevationScale
 
 class MovieFragment : Fragment() {
 
@@ -36,6 +38,8 @@ class MovieFragment : Fragment() {
             inflater,
             R.layout.fragment_movie, container, false
         )
+        exitTransition = MaterialElevationScale( false)
+        reenterTransition = MaterialElevationScale(true)
         return binding.root
     }
 

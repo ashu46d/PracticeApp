@@ -47,7 +47,6 @@ class MoviesAdapter(private var list: MutableList<MovieDomainModel>) :
         fun bind(model: MovieDomainModel) {
             binding.item = model
             val posterUrl = model.poster_path
-            Log.d("TAG11", "bind: ${posterUrl}")
             Glide.with(binding.movieIamge.context).load(posterUrl).into(binding.movieIamge)
             binding.root.transitionName = model.title
         }
