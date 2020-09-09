@@ -85,7 +85,10 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.root.transitionName = args.idMovie.title
+        if(args.idSelf == false)
+            binding.root.transitionName = args.idMovie.title
+        else
+            binding.root.transitionName = args.idMovie.id.toString()
         Glide.with(requireContext())
             .load("${args.idMovie.backdrop_path}").into(binding.expandedImage)
         Glide.with(requireContext()).load("${args.idMovie.poster_path}").into(binding.posterImage)

@@ -36,7 +36,8 @@ class RecommnedationAdapter(private var list: List<MovieDomainModel>) :
         val movieItem = list[position]
         holder.bind(movieItem)
         holder.itemView.setOnClickListener {
-            it.findNavController().navigate(MovieDetailFragmentDirections.actionMovieDetailFragmentSelf(movieItem.id,movieItem))
+            val extras = FragmentNavigatorExtras(holder.itemView to movieItem.id.toString())
+            it.findNavController().navigate(MovieDetailFragmentDirections.actionMovieDetailFragmentSelf(movieItem.id,movieItem,true),extras)
         }
     }
 
@@ -48,6 +49,7 @@ class RecommnedationAdapter(private var list: List<MovieDomainModel>) :
             Glide.with(binding.recPosterImg.context).load(posterUrl).into(
                 binding.recPosterImg
             )
+            binding.root.transitionName = model.id.toString()
         }
 
     }

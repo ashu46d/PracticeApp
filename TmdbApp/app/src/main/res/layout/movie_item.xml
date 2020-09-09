@@ -15,7 +15,7 @@
 
 
     <androidx.cardview.widget.CardView
-        app:cardElevation="@dimen/margin_10"
+        app:cardElevation="4dp"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:clickable="false"

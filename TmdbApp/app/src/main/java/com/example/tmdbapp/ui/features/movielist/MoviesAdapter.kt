@@ -37,7 +37,7 @@ class MoviesAdapter(private var list: MutableList<MovieDomainModel>) :
 
         holder.itemView.setOnClickListener {
             val extras = FragmentNavigatorExtras(holder.itemView to movieItem.title!!)
-            it.findNavController().navigate(MovieFragmentDirections.actionMovieFragmentToMovieDetailFragment(movieItem.id,movieItem),extras)
+            it.findNavController().navigate(MovieFragmentDirections.actionMovieFragmentToMovieDetailFragment(movieItem.id,movieItem,false),extras)
 
         }
     }
