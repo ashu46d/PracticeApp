@@ -24,10 +24,10 @@ class MovieViewModel(private val getPopularMoviesUseCase: GetPopularMoviesUseCas
         return popularMoviesLiveData
     }
 
-    fun getPopularMovies() {
+    fun getPopularMovies(page:Int){
         viewModelScope.launch {
 
-            getPopularMoviesUseCase.execute().also {
+            getPopularMoviesUseCase.execute(page).also {
                     result ->
                 when(result) {
                     is Result.Success -> {

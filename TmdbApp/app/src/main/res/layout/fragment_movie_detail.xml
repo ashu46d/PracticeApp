@@ -81,6 +81,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.cardview.widget.CardView
+                    app:cardCornerRadius="@dimen/margin_10"
                     android:id="@+id/poster_image_cv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

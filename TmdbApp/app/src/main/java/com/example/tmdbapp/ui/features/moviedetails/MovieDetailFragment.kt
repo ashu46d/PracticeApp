@@ -64,6 +64,9 @@ class MovieDetailFragment : Fragment() {
                 binding.recommendationsRecyclerView.layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                 binding.recommendationsRecyclerView.adapter = RecommnedationAdapter(it)
+                if(it.isEmpty()){
+                    binding.recomTitle.visibility = View.GONE
+                }
             }
         })
         mViewModel.getCast(args.idMovieId).observe(viewLifecycleOwner, Observer {
@@ -82,6 +85,7 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.root.transitionName = args.idMovie.title
         Glide.with(requireContext())
             .load("${args.idMovie.backdrop_path}").into(binding.expandedImage)
         Glide.with(requireContext()).load("${args.idMovie.poster_path}").into(binding.posterImage)

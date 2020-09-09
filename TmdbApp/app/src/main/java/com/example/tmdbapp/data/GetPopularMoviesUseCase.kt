@@ -8,9 +8,9 @@ import com.example.tmdbapp.data.networking.Result
 class GetPopularMoviesUseCase (
     private val movieRepository: Repository) {
 
-    private var page: Int =1
+//    private var page: Int =1
 
-    suspend fun execute(): Result<Any> {
+    suspend fun execute(page:Int): Result<Any> {
         return try {
             movieRepository.getPopularMovies(page)?.let {
                 Result.Success(it.filter { it.poster_path != null })

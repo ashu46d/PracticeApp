@@ -11,7 +11,7 @@ import com.example.tmdbapp.data.networking.models.MovieDomainModel
 import com.example.tmdbapp.databinding.MovieItemBinding
 
 
-class MoviesAdapter(private var list: List<MovieDomainModel>) :
+class MoviesAdapter(private var list: MutableList<MovieDomainModel>) :
     RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -36,8 +36,8 @@ class MoviesAdapter(private var list: List<MovieDomainModel>) :
         holder.bind(movieItem)
 
         holder.itemView.setOnClickListener {
-            val extras = FragmentNavigatorExtras(holder.itemView to "shared_element_container")
-            it.findNavController().navigate(MovieFragmentDirections.actionMovieFragmentToMovieDetailFragment(movieItem.id,movieItem))
+            val extras = FragmentNavigatorExtras(holder.itemView to movieItem.title!!)
+            it.findNavController().navigate(MovieFragmentDirections.actionMovieFragmentToMovieDetailFragment(movieItem.id,movieItem),extras)
 
         }
     }
@@ -49,12 +49,13 @@ class MoviesAdapter(private var list: List<MovieDomainModel>) :
             val posterUrl = model.poster_path
             Log.d("TAG11", "bind: ${posterUrl}")
             Glide.with(binding.movieIamge.context).load(posterUrl).into(binding.movieIamge)
+            binding.root.transitionName = model.title
         }
 
     }
-//    fun addItems(movieItems:List<MovieDomainModel>){
-//        list.addAll(movieItems)
-//        notifyDataSetChanged()
-//    }
+    fun addItems(movieItems:List<MovieDomainModel>){
+        list.addAll(movieItems)
+        notifyItemInserted(list.size-1)
+    }
 
 }
