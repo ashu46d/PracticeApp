@@ -38,7 +38,6 @@ class MovieFragment : Fragment() {
             inflater,
             R.layout.fragment_movie, container, false
         )
-        exitTransition = MaterialElevationScale( false)
         reenterTransition = MaterialElevationScale(true)
         return binding.root
     }

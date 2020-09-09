@@ -56,7 +56,7 @@ class MovieDetailFragment : Fragment() {
             container,
             false
         ) as FragmentMovieDetailBinding
-        exitTransition = MaterialElevationScale( false)
+        exitTransition =Hold()
         reenterTransition = MaterialElevationScale(true)
         mViewModel.getData(args.idMovieId).observe(viewLifecycleOwner, Observer {
             binding.movieDetail = it
