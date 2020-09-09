@@ -17,7 +17,7 @@ fun MovieDetail.toDomainModel(): MovieDetailDomainModel {
     var type: String = ""
     this.genres.forEach {
         type += if (type != "") {
-            "," + it.name
+            " | " + it.name
         } else {
             it.name
         }
@@ -26,7 +26,7 @@ fun MovieDetail.toDomainModel(): MovieDetailDomainModel {
     var prodCountries: String = ""
     this.production_countries.forEach {
         prodCountries += if (prodCountries != "") {
-            "," + it.name
+            " | " + it.name
         } else {
             it.name
         }

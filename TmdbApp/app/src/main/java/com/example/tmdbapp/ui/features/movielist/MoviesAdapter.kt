@@ -49,7 +49,6 @@ class MoviesAdapter(private var list: List<MovieDomainModel>) :
             val posterUrl = model.poster_path
             Log.d("TAG11", "bind: ${posterUrl}")
             Glide.with(binding.movieIamge.context).load(posterUrl).into(binding.movieIamge)
-
         }
 
     }
