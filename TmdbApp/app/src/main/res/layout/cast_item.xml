@@ -18,6 +18,7 @@
         android:background="@android:color/black">
 
         <androidx.cardview.widget.CardView
+            android:backgroundTint="@color/grey_background"
             android:id="@+id/cast_image_cv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -20,7 +20,7 @@ import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialElevationScale
 
 class MovieFragment : Fragment() {
-
+    private lateinit var moviesAdapter: MoviesAdapter
 
     private val mViewModel by lazy {
         ViewModelProvider(this, MyViewModelFactory()).get(
@@ -39,38 +39,31 @@ class MovieFragment : Fragment() {
             R.layout.fragment_movie, container, false
         )
         reenterTransition = MaterialElevationScale(true)
+
+        moviesAdapter = MoviesAdapter()
+
+        binding.movieRecyclerView.apply {
+            setHasFixedSize(true)
+            val manager = GridLayoutManager(context, 3)
+            layoutManager = manager
+            adapter = moviesAdapter
+        }
+        mViewModel.getPopularMovies()
+        binding.movieRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                mViewModel.getPopularMovies()
+            }
+        })
+
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        mViewModel.getPopularMovies(1)
         mViewModel.getMovies().observe(viewLifecycleOwner, Observer {
-            it?.let{
-                setAdapter(it as MutableList<MovieDomainModel>)
-            }
+            moviesAdapter.updateItems(it)
         })
-    }
-
-    fun setAdapter(listOfMovies: MutableList<MovieDomainModel>) {
-        var page = 1
-        val adapter = MoviesAdapter(listOfMovies)
-        binding.movieRecyclerView.layoutManager = GridLayoutManager(context, 3)
-        binding.movieRecyclerView.adapter = adapter
-
-//        binding.movieRecyclerView.addOnScrollListener(object:RecyclerView.OnScrollListener(){
-//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                if(!recyclerView.canScrollVertically(1)){
-//                    mViewModel.getPopularMovies(page)
-//                    mViewModel.getMovies().observe(viewLifecycleOwner, Observer {
-//                        it?.let{
-//                            adapter.addItems(it)
-//                        }
-//                    })
-//                }
-//            }
-//        })
     }
 
 

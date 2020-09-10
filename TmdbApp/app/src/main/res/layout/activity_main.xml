@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity"
-        android:background="#1A1A1A"
+        android:background="@color/grey_background"
         >
 
 

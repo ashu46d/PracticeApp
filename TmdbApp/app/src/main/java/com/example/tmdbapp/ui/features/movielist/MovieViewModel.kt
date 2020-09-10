@@ -1,56 +1,29 @@
 package com.example.tmdbapp.ui.features.movielist
 
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tmdbapp.data.GetPopularMoviesUseCase
-import com.example.tmdbapp.data.networking.Result
 import com.example.tmdbapp.data.networking.models.MovieDomainModel
 import kotlinx.coroutines.launch
 
-class MovieViewModel(private val getPopularMoviesUseCase: GetPopularMoviesUseCase): ViewModel() {
+class MovieViewModel(private val getPopularMoviesUseCase: GetPopularMoviesUseCase) : ViewModel() {
 
 
-    private lateinit var popularMoviesLiveData: MutableLiveData<List<MovieDomainModel>>
+//Needs to be chaged
+    private val _popularMovies = MutableLiveData<MutableList<MovieDomainModel>>(mutableListOf(MovieDomainModel(0,"","","","","",0.0,0)))
 
 
-    fun getMovies(): LiveData<List<MovieDomainModel>> {
-        if(!::popularMoviesLiveData.isInitialized) {
-            popularMoviesLiveData = MutableLiveData()
-            popularMoviesLiveData.value = null
-        }
+    fun getMovies(): LiveData<MutableList<MovieDomainModel>> = _popularMovies
 
-        return popularMoviesLiveData
-    }
+    fun getPopularMovies() {
 
-    fun getPopularMovies(page:Int){
         viewModelScope.launch {
-
-            getPopularMoviesUseCase.execute(page).also {
-                    result ->
-                when(result) {
-                    is Result.Success -> {
-                        val movies: List<MovieDomainModel>?  = result.data as List<MovieDomainModel>?
-//                        if(movies.isNullOrEmpty()) {
-//                            isLoadingLiveData.value = false
-//                            isErrorLiveData.value = true
-//                        } else {
-//                            isLoadingLiveData.value = false
-                            popularMoviesLiveData.value = movies
-//                        }
-                    }
-
-//                    is Result.Error -> {
-//                        isLoadingLiveData.value = false
-//                        isErrorLiveData.value = true
-//                    }
-                }
-
-
-            }
+            _popularMovies.value = getPopularMoviesUseCase.execute()
         }
+
+
     }
-
-
 }

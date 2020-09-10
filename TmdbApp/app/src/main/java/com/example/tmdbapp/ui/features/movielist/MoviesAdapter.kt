@@ -11,8 +11,13 @@ import com.example.tmdbapp.data.networking.models.MovieDomainModel
 import com.example.tmdbapp.databinding.MovieItemBinding
 
 
-class MoviesAdapter(private var list: MutableList<MovieDomainModel>) :
+class MoviesAdapter() :
     RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
+
+    val list = ArrayList<MovieDomainModel>()
+    init {
+        addItems(ArrayList<MovieDomainModel>())
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -53,8 +58,11 @@ class MoviesAdapter(private var list: MutableList<MovieDomainModel>) :
 
     }
     fun addItems(movieItems:List<MovieDomainModel>){
-        list.addAll(movieItems)
-        notifyItemInserted(list.size-1)
+        list.addAll(ArrayList<MovieDomainModel>(movieItems))
+    }
+    fun updateItems(movieItems: List<MovieDomainModel>){
+        addItems(movieItems)
+        notifyItemInserted(list.size)
     }
 
 }

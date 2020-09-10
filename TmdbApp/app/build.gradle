@@ -19,6 +19,7 @@ android {
         buildConfigField 'String', 'BASE_URL','"https://api.themoviedb.org"'
         buildConfigField 'String', 'IMAGE_URL','"https://image.tmdb.org/t/p/w185/"'
         buildConfigField 'String', 'API_KEY', '"7954c2f5861a237b14ffdd106e547eb7"'
+        buildConfigField 'int', 'PAGE', '1'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
