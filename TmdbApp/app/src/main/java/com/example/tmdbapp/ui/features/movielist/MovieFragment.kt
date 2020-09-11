@@ -2,6 +2,7 @@ package com.example.tmdbapp.ui.features.movielist
 
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tmdbapp.*
 import com.example.tmdbapp.data.networking.models.MovieDomainModel
 import com.example.tmdbapp.databinding.FragmentMovieBinding
+import com.example.tmdbapp.ui.features.base.BaseFragment
 import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialElevationScale
 
@@ -38,20 +40,25 @@ class MovieFragment : Fragment() {
             inflater,
             R.layout.fragment_movie, container, false
         )
-        reenterTransition = MaterialElevationScale(true)
-
-        moviesAdapter = MoviesAdapter()
+        postponeEnterTransition()
+        startPostponedEnterTransition()
+//        reenterTransition = MaterialElevationScale(true)
+        exitTransition = Hold()
+        moviesAdapter = mViewModel.getAdapter()
 
         binding.movieRecyclerView.apply {
-            setHasFixedSize(true)
             val manager = GridLayoutManager(context, 3)
             layoutManager = manager
             adapter = moviesAdapter
         }
-        mViewModel.getPopularMovies()
+        var page = 1
+        mViewModel.getPopularMovies(page)
         binding.movieRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                mViewModel.getPopularMovies()
+                if(!recyclerView.canScrollVertically(1)){
+                    mViewModel.getPopularMovies(page)
+                    page++
+                }
             }
         })
 
@@ -62,7 +69,7 @@ class MovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewModel.getMovies().observe(viewLifecycleOwner, Observer {
-            moviesAdapter.updateItems(it)
+            mViewModel.updateList(it)
         })
     }
 

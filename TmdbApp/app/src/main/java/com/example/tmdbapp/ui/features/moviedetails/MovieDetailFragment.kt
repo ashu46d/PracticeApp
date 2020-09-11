@@ -38,7 +38,6 @@ class MovieDetailFragment : Fragment() {
     }
     val args: MovieDetailFragmentArgs by navArgs()
     lateinit var binding: FragmentMovieDetailBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = MaterialContainerTransform()
@@ -56,7 +55,7 @@ class MovieDetailFragment : Fragment() {
             container,
             false
         ) as FragmentMovieDetailBinding
-        exitTransition =Hold()
+        exitTransition = Hold()
         reenterTransition = MaterialElevationScale(true)
         mViewModel.getData(args.idMovieId).observe(viewLifecycleOwner, Observer {
             binding.movieDetail = it
@@ -64,21 +63,22 @@ class MovieDetailFragment : Fragment() {
 
         mViewModel.getRecommendation(args.idMovieId).observe(viewLifecycleOwner, Observer {
             it?.let {
-                Log.d("RECOMM", "onCreateView: ${it}")
                 binding.recommendationsRecyclerView.layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                 val adapter = RecommnedationAdapter(it)
                 binding.recommendationsRecyclerView.adapter = adapter
-                if(it.isEmpty()){
+                if (it.isEmpty()) {
                     binding.recomTitle.visibility = View.GONE
                 }
             }
         })
         mViewModel.getCast(args.idMovieId).observe(viewLifecycleOwner, Observer {
-            it?.let{
-                binding.castRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+            it?.let {
+                binding.castRecyclerView.layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                 binding.castRecyclerView.adapter = CastAdapter(it)
-                binding.castRecyclerView.adapter!!.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+                binding.castRecyclerView.adapter!!.stateRestorationPolicy =
+                    RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
             }
         })
 
@@ -91,7 +91,7 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(args.idSelf == false)
+        if (args.idSelf == false)
             binding.root.transitionName = args.idMovie.title
         else
             binding.root.transitionName = args.idMovie.id.toString()

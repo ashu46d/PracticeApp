@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.Navigation
@@ -14,48 +15,23 @@ import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel> : DaggerFragment() {
+open class BaseFragment: Fragment(){
+    var hasInitializedRootView = false
+    private var rootView: View? = null
 
-    abstract fun getViewModelClass(): Class<VM>
-    abstract fun layoutId(): Int
-    private var isRetryOnNetwork: Boolean = false
-    protected var isNetworkAvailable = true
-    private var isLoaded: Boolean = false
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-
-    protected lateinit var binding: VB
-    protected lateinit var viewModel: VM
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        if (::binding.isInitialized) {
-            return binding.root
+    fun getPersistentView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?, layout: Int): View? {
+        if (rootView == null) {
+            // Inflate the layout for this fragment
+            rootView = inflater?.inflate(layout,container,false)
+        } else {
+            // Do not inflate the layout again.
+            // The returned View of onCreateView will be added into the fragment.
+            // However it is not allowed to be added twice even if the parent is same.
+            // So we must remove rootView from the existing parent view group
+            // (it will be added back).
+            (rootView?.getParent() as? ViewGroup)?.removeView(rootView)
         }
-        binding = DataBindingUtil.bind(inflater.inflate(layoutId(), container, false))!!
-        binding.lifecycleOwner = viewLifecycleOwner
-        return binding.root
+
+        return rootView
     }
-
-    abstract fun getViewModelOwner(): ViewModelStoreOwner
-    abstract fun setObserver()
-
-    abstract fun toBeCalledOnce()
-
-    fun navController() = Navigation.findNavController(requireView())
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(getViewModelOwner(), viewModelFactory)[getViewModelClass()]
-
-        setObserver()
-    }
-
-
-
 }

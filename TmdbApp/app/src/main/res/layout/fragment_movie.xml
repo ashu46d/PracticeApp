@@ -7,7 +7,11 @@
 
     >
 
-    <data />
+    <data >
+        <variable
+            name="viewmodel"
+            type="com.example.tmdbapp.ui.features.movielist.MoviesAdapter" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

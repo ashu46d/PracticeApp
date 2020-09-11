@@ -62,7 +62,7 @@ class MoviesAdapter() :
     }
     fun updateItems(movieItems: List<MovieDomainModel>){
         addItems(movieItems)
-        notifyItemInserted(list.size)
+        notifyItemInserted(list.size-1)
     }
 
 }

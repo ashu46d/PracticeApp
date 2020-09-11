@@ -8,13 +8,15 @@ import com.example.tmdbapp.data.networking.models.Actor
 import com.example.tmdbapp.data.networking.models.ActorDomainModel
 import com.example.tmdbapp.data.networking.models.MovieDomainModel
 import com.example.tmdbapp.data.networking.models.response.MovieDetailDomainModel
+import com.example.tmdbapp.data.networking.models.response.RecommendedMovieResponse
+import com.example.tmdbapp.ui.features.movielist.MoviesAdapter
+import com.example.tmdbapp.ui.features.recommendation.RecommnedationAdapter
 import kotlinx.coroutines.launch
 
 class MovieDetailViewModel(private val getMovieDetailUseCase: GetMovieDetailUseCase) : ViewModel() {
     private lateinit var movieDetail: MutableLiveData<MovieDetailDomainModel>
     private lateinit var recommendedMovies:MutableLiveData<List<MovieDomainModel>>
     private lateinit var castList:MutableLiveData<List<ActorDomainModel>>
-
     fun getData(movieId: Int):LiveData<MovieDetailDomainModel>{
         if(!::movieDetail.isInitialized) {
             movieDetail = MutableLiveData()
