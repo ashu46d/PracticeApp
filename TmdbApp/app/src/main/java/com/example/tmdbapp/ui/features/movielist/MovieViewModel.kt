@@ -14,7 +14,7 @@ class MovieViewModel(private val getPopularMoviesUseCase: GetPopularMoviesUseCas
 
 
 //Needs to be chaged
-    private val _popularMovies = MutableLiveData<MutableList<MovieDomainModel>>(mutableListOf(MovieDomainModel(0,"","","","","",0.0,0)))
+    private val _popularMovies = MutableLiveData<MutableList<MovieDomainModel>>(mutableListOf())
     private val mAdapter = MoviesAdapter()
 
 
@@ -28,7 +28,7 @@ class MovieViewModel(private val getPopularMoviesUseCase: GetPopularMoviesUseCas
     fun getMovies(): LiveData<MutableList<MovieDomainModel>> = _popularMovies
 
     fun getPopularMovies(page:Int) {
-
+//        _popularMovies.value = mutableListOf()
         viewModelScope.launch {
             _popularMovies.value = getPopularMoviesUseCase.execute(page)
         }
