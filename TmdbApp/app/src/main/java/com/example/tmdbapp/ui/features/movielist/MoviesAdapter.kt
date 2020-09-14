@@ -43,7 +43,6 @@ class MoviesAdapter() :
         holder.itemView.setOnClickListener {
             val extras = FragmentNavigatorExtras(holder.itemView to movieItem.title!!)
             it.findNavController().navigate(MovieFragmentDirections.actionMovieFragmentToMovieDetailFragment(movieItem.id,movieItem,false),extras)
-
         }
     }
 

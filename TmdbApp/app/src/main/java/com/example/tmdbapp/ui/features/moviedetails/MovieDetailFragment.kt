@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -40,7 +41,6 @@ class MovieDetailFragment : Fragment() {
     lateinit var binding: FragmentMovieDetailBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = MaterialContainerTransform()
     }
 
 
@@ -48,6 +48,7 @@ class MovieDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(
             inflater,
@@ -55,8 +56,11 @@ class MovieDetailFragment : Fragment() {
             container,
             false
         ) as FragmentMovieDetailBinding
+
+        postponeEnterTransition()
+        binding.root.doOnPreDraw { startPostponedEnterTransition() }
         exitTransition = Hold()
-        reenterTransition = MaterialElevationScale(true)
+        sharedElementEnterTransition = MaterialContainerTransform()
         mViewModel.getData(args.idMovieId).observe(viewLifecycleOwner, Observer {
             binding.movieDetail = it
         })
@@ -77,8 +81,6 @@ class MovieDetailFragment : Fragment() {
                 binding.castRecyclerView.layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                 binding.castRecyclerView.adapter = CastAdapter(it)
-                binding.castRecyclerView.adapter!!.stateRestorationPolicy =
-                    RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
             }
         })
 
@@ -91,7 +93,7 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (args.idSelf == false)
+        if (!args.idSelf)
             binding.root.transitionName = args.idMovie.title
         else
             binding.root.transitionName = args.idMovie.id.toString()
