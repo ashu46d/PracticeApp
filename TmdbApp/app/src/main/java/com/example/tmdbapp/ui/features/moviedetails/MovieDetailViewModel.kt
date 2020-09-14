@@ -17,6 +17,17 @@ class MovieDetailViewModel(private val getMovieDetailUseCase: GetMovieDetailUseC
     private lateinit var movieDetail: MutableLiveData<MovieDetailDomainModel>
     private lateinit var recommendedMovies:MutableLiveData<List<MovieDomainModel>>
     private lateinit var castList:MutableLiveData<List<ActorDomainModel>>
+
+    private val mAdapter = RecommnedationAdapter()
+
+    fun getAdapter(): RecommnedationAdapter {
+        return mAdapter
+    }
+
+    fun updateList(list:List<MovieDomainModel>){
+        mAdapter.update(list)
+    }
+
     fun getData(movieId: Int):LiveData<MovieDetailDomainModel>{
         if(!::movieDetail.isInitialized) {
             movieDetail = MutableLiveData()

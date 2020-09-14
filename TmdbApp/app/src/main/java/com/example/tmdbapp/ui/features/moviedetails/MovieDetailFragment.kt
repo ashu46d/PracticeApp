@@ -32,6 +32,7 @@ import kotlinx.android.synthetic.main.fragment_movie_detail.*
 
 
 class MovieDetailFragment : Fragment() {
+    private lateinit var recommnedationAdapter: RecommnedationAdapter
     private val mViewModel by lazy {
         ViewModelProvider(this, MyViewModelFactory()).get(
             MovieDetailViewModel::class.java
@@ -64,13 +65,16 @@ class MovieDetailFragment : Fragment() {
         mViewModel.getData(args.idMovieId).observe(viewLifecycleOwner, Observer {
             binding.movieDetail = it
         })
+        recommnedationAdapter = mViewModel.getAdapter()
+        binding.recommendationsRecyclerView.apply{
+            adapter = recommnedationAdapter
+            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
+
+        }
 
         mViewModel.getRecommendation(args.idMovieId).observe(viewLifecycleOwner, Observer {
             it?.let {
-                binding.recommendationsRecyclerView.layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                val adapter = RecommnedationAdapter(it)
-                binding.recommendationsRecyclerView.adapter = adapter
+                mViewModel.updateList(it)
                 if (it.isEmpty()) {
                     binding.recomTitle.visibility = View.GONE
                 }

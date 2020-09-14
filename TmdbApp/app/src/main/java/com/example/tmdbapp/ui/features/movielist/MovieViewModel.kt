@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 class MovieViewModel(private val getPopularMoviesUseCase: GetPopularMoviesUseCase) : ViewModel() {
 
 
-//Needs to be chaged
     private val _popularMovies = MutableLiveData<MutableList<MovieDomainModel>>(mutableListOf())
     private val mAdapter = MoviesAdapter()
 

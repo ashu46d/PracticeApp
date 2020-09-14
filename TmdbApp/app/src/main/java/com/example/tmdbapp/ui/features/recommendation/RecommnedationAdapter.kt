@@ -12,8 +12,18 @@ import com.example.tmdbapp.databinding.RecommendedMovieItemsBinding
 import com.example.tmdbapp.ui.features.moviedetails.MovieDetailFragmentDirections
 import com.example.tmdbapp.ui.features.movielist.MovieFragmentDirections
 
-class RecommnedationAdapter(private var list: List<MovieDomainModel>) :
+class RecommnedationAdapter() :
     RecyclerView.Adapter<RecommnedationAdapter.RecommendationViewHolder>() {
+
+    var list = ArrayList<MovieDomainModel>()
+
+    init {
+        update(ArrayList<MovieDomainModel>())
+    }
+
+    fun update(movieItems:List<MovieDomainModel>){
+        list = ArrayList<MovieDomainModel>(movieItems)
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
